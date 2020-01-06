@@ -48,8 +48,8 @@ public class EONPhysicalLink extends DefaultWeightedEdge {
             int freeSlots = 0;
             for (int j =0; j< slotsNumber; j++){
                 EONSubcarrierSlot slot =(EONSubcarrierSlot) objectSlots[j] ;
-                if(!slot.isOccupied()){
-                    maxFreeSlots = freeSlots > maxFreeSlots ? freeSlots : freeSlots;
+                if(slot.isOccupied()){
+                    maxFreeSlots = freeSlots > maxFreeSlots ? freeSlots : maxFreeSlots;
                     break;
                 }else{
                     freeSlots++;

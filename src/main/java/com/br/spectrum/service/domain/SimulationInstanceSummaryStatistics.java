@@ -90,7 +90,7 @@ public class SimulationInstanceSummaryStatistics {
         }
 
         this.blockProbabilityMean = StatisticsUtils.getMean(blockProbabilityPerCycleArray).getResult();
-        this.blockProbabilityConfidenceInterval = Math.abs( this.blockProbabilityMean - StatisticsUtils.getConfidenceIntervalAbs(blockProbabilityPerCycleArray));
+        this.blockProbabilityConfidenceInterval =StatisticsUtils.getConfidenceIntervalAbs(blockProbabilityPerCycleArray);// Math.abs( this.blockProbabilityMean - StatisticsUtils.getConfidenceIntervalAbs(blockProbabilityPerCycleArray));
 
         // Blocked Bandwidth Probability Calc
         double[] blockedBandwidthProbabilityPerCycleArray = new double[perCyclesAmount];
