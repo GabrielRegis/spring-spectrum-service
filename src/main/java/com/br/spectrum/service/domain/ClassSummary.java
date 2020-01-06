@@ -11,12 +11,14 @@ public class ClassSummary {
     private int cycleNum;
     private String classId;
     private String className;
+    private String color;
     private SimulationInstanceSummaryStatistics statistics;
 
     public ClassSummary(CallClass callClass, ControlPlane controlPlane) {
         this.id = UUID.randomUUID().toString();
         this.classId = callClass.getId();
         this.className = callClass.getClassName();
+        this.color = callClass.getColor();
         this.statistics = new SimulationInstanceSummaryStatistics();
         this.cycleNum = 0;
         this.addCycle(controlPlane);
@@ -93,7 +95,13 @@ public class ClassSummary {
         return null;
     }
 
+    public String getColor() {
+        return color;
+    }
 
+    public void setColor(String color) {
+        this.color = color;
+    }
 
     public int getCycleNum() {
         return cycleNum;

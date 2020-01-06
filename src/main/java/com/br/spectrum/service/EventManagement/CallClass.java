@@ -8,18 +8,28 @@ public class CallClass {
 
     private String id;
     private String className;
+    private String color;
     private double frequency;
     private int requiredBandwidth;
     private double holdingTime;
     private CallDegradationConfiguration degradationConfiguration;
 
-    public CallClass(String className, double frequency, int requiredBandwidth, double holdingTime, CallDegradationConfiguration degradationConfiguration) {
+    public CallClass(String className, double frequency, int requiredBandwidth, double holdingTime, CallDegradationConfiguration degradationConfiguration, String color) {
         this.id = UUID.randomUUID().toString();
         this.className = className;
         this.frequency = frequency;
         this.requiredBandwidth = requiredBandwidth;
         this.holdingTime = holdingTime;
         this.degradationConfiguration = degradationConfiguration;
+        this.color = color;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getId() {

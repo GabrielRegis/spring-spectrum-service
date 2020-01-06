@@ -35,12 +35,12 @@ public class SimulationAgent {
         for(CallClassConfiguration classConfig : simulationConfiguration.getClassesConfiguration().getFlowClassConfigurations()){
             int requiredBandwidth = ThreadLocalRandom.current().nextInt(classConfig.getMinBandwidth(), classConfig.getMaxBandwidth() + 1);
             int holdingTime = ThreadLocalRandom.current().nextInt(classConfig.getMinHoldingTime(), classConfig.getMaxHoldingTime() + 1);
-            CallClass callClass = new CallClass(classConfig.getName(), classConfig.getFrequency(), requiredBandwidth, holdingTime, classConfig.getDegradationConfiguration());
+            CallClass callClass = new CallClass(classConfig.getName(), classConfig.getFrequency(), requiredBandwidth, holdingTime, classConfig.getDegradationConfiguration(), classConfig.getColor());
             this.callClasses.add(callClass);
         }
 
         this.seeds = new ArrayList<Integer>();
-        for(int i = 0; i<simulationConfiguration.getGeneralConfigurations().getSimulationCycles(); i++){
+        for(int i = 1; i<simulationConfiguration.getGeneralConfigurations().getSimulationCycles(); i++){
             int seed = (int) ThreadLocalRandom.current().nextLong();
             this.seeds.add(seed);
         }

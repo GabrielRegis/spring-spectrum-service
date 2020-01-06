@@ -5,9 +5,7 @@ import com.br.spectrum.service.EventManagement.CriticalBPEventSnapshot;
 import com.br.spectrum.service.EventManagement.CriticalFragmentationEventSnapshot;
 import com.br.spectrum.service.EventManagement.SimulationInstanceSummaryWithControlPlane;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class SimulationSummaryDAO {
     private String id;
@@ -19,6 +17,7 @@ public class SimulationSummaryDAO {
     private int cycleNum;
     private int startLoad;
     private int loadStep;
+    private List<CallClassGeneralStatistics> blockedCallsAmountPerClass;
 
     public SimulationSummaryDAO(SimulationSummary simulationSummary) {
         this.id = simulationSummary.getId();
@@ -26,6 +25,7 @@ public class SimulationSummaryDAO {
         this.criticalFragmentationEventSnapshots = new ArrayList<>();
         this.simulationInstanceSummaries = new ArrayList<>();
         this.statistics = new SimulationInstanceSummaryStatistics();
+
 
         List<SimulationInstanceSummaryWithControlPlane> sortedInstances = new ArrayList<>( simulationSummary.getSimulationInstanceSummaryHashMap().values());
         sortedInstances.sort(new Comparator<SimulationInstanceSummaryWithControlPlane>() {
@@ -93,9 +93,29 @@ public class SimulationSummaryDAO {
         });
 
         this.statistics.calculateStatistics();
+
+        HashMap<String, CallClassGeneralStatistics> callClassGeneralStatisticsHashMap = new HashMap<>();
+
+        this.simulationInstanceSummaries.forEach(simulationInstanceSummary -> {
+            simulationInstanceSummary.getClassSummaries().forEach(classSummary -> {
+                if(callClassGeneralStatisticsHashMap.containsKey(classSummary.getClassId())){
+                    callClassGeneralStatisticsHashMap.get(classSummary.getClassId()).setBlockedAmount(callClassGeneralStatisticsHashMap.get(classSummary.getClassId()).getBlockedAmount() + classSummary.getStatistics().getTotalBlockedAmount());
+                }else{
+                    callClassGeneralStatisticsHashMap.put(classSummary.getClassId(), new CallClassGeneralStatistics(classSummary.getClassName(), classSummary.getClassId(), classSummary.getColor(), classSummary.getStatistics().getTotalBlockedAmount()));
+                }
+            });
+        });
+        this.blockedCallsAmountPerClass = new ArrayList<>();
+        this.blockedCallsAmountPerClass.addAll(callClassGeneralStatisticsHashMap.values());
     }
 
+    public List<CallClassGeneralStatistics> getBlockedCallsAmountPerClass() {
+        return blockedCallsAmountPerClass;
+    }
 
+    public void setBlockedCallsAmountPerClass(List<CallClassGeneralStatistics> blockedCallsAmountPerClass) {
+        this.blockedCallsAmountPerClass = blockedCallsAmountPerClass;
+    }
 
     public double getIndexValueFromArrayList(ArrayList<Integer> list, int index){
         Integer[] listArray = new Integer[list.size()];

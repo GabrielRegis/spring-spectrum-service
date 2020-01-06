@@ -9,6 +9,7 @@ public class CallClassConfiguration {
     private int maxHoldingTime;
     private double frequency;
     private CallDegradationConfiguration degradationConfiguration;
+    private String color;
 
     public CallClassConfiguration(){
 
@@ -18,7 +19,7 @@ public class CallClassConfiguration {
 
     }
 
-    public CallClassConfiguration(String name, int minBandwidth, int maxBandwidth, int minHoldingTime, int maxHoldingTime, double frequency, CallDegradationConfiguration degradationConfiguration) {
+    public CallClassConfiguration(String name, int minBandwidth, int maxBandwidth, int minHoldingTime, int maxHoldingTime, double frequency, CallDegradationConfiguration degradationConfiguration, String color) {
         this.name = name;
         this.minBandwidth = minBandwidth;
         this.maxBandwidth = maxBandwidth;
@@ -26,6 +27,15 @@ public class CallClassConfiguration {
         this.maxHoldingTime = maxHoldingTime;
         this.frequency = frequency;
         this.degradationConfiguration = degradationConfiguration;
+        this.color = color;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
     }
 
     public String getId() {

@@ -25,8 +25,7 @@ public class EventsFactory {
         this.seed = seed;
 
         for(Call call : calls){
-            double eventInstant = PoissonRandomNumberGenerator.getPoissonRandomNumber((double)load/3000, this.getSeed());
-//            double eventInstant = PoissonRandomNumberGenerator.getPoissonRandomNumber(load/10, this.getSeed());
+            double eventInstant = PoissonRandomNumberGenerator.getPoissonRandomNumber((double)load/1000, this.getSeed());
             CallArrivalEvent callArrivalEvent = new CallArrivalEvent(eventInstant, call);
             CallDepartureEvent callDepartureEvent = new CallDepartureEvent(eventInstant + call.getCallClass().getHoldingTime(), call);
             this.simulationEvents.add(callArrivalEvent);
