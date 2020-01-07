@@ -97,6 +97,7 @@ public class SimulationSummaryDAO {
         HashMap<String, CallClassGeneralStatistics> callClassGeneralStatisticsHashMap = new HashMap<>();
 
         this.simulationInstanceSummaries.forEach(simulationInstanceSummary -> {
+            simulationInstanceSummary.calculateBPPerClass();
             simulationInstanceSummary.getClassSummaries().forEach(classSummary -> {
                 if(callClassGeneralStatisticsHashMap.containsKey(classSummary.getClassId())){
                     callClassGeneralStatisticsHashMap.get(classSummary.getClassId()).setBlockedAmount(callClassGeneralStatisticsHashMap.get(classSummary.getClassId()).getBlockedAmount() + classSummary.getStatistics().getTotalBlockedAmount());

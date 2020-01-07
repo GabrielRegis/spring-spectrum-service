@@ -15,6 +15,7 @@ public class SimulationInstanceSummary {
     private List<ClassSummary> classSummaries;
     private SimulationSummary simulationSummary;
     private SimulationInstanceSummaryStatistics statistics;
+    private List<CallClassGeneralStatistics> blockProbabilityPerClass;
 
     public SimulationInstanceSummary(double load, ControlPlane controlPlane, ArrayList<CallClass> callClasses) {
         this.id = UUID.randomUUID().toString();
@@ -26,6 +27,21 @@ public class SimulationInstanceSummary {
             this.classSummaries.add(classSummary);
         });
         this.statistics = new SimulationInstanceSummaryStatistics();
+        this.blockProbabilityPerClass = new ArrayList<>();
+    }
+
+    public void calculateBPPerClass(){
+    this.classSummaries.forEach(classSummary -> {
+        blockProbabilityPerClass.add(new CallClassGeneralStatistics(classSummary.getClassName(), classSummary.getClassId(), classSummary.getColor(), classSummary.getStatistics().getBlockProbabilityMean()));
+    });
+    }
+
+    public List<CallClassGeneralStatistics> getBlockProbabilityPerClass() {
+        return blockProbabilityPerClass;
+    }
+
+    public void setBlockProbabilityPerClass(List<CallClassGeneralStatistics> blockProbabilityPerClass) {
+        this.blockProbabilityPerClass = blockProbabilityPerClass;
     }
 
     public int getCycleNum() {
