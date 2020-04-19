@@ -21,6 +21,7 @@ public class SampleRSA implements RSA {
 
     public boolean tryToAllocateCall(ControlPlaneInterface controlPlaneInterface, EONPhysicalTopology physicalTopology,
                                      EONVirtualTopology eonVirtualTopology, Call call, boolean shouldDegradeBandwidth){
+
         KShortestPaths<EONNode, EONPhysicalLink> kShortestPaths = new KShortestPaths<EONNode, EONPhysicalLink>(physicalTopology, call.getSource(), 3);
         List<GraphPath<EONNode, EONPhysicalLink>> paths = kShortestPaths.getPaths(call.getDestination());
 
@@ -33,7 +34,9 @@ public class SampleRSA implements RSA {
                 for(EONPhysicalLink link : links){
                     Modulation bestModulation = ModulationUtils.getModulationFromDistance(link.getWeight());
                     int requiredSlots = ModulationUtils.bandwidthToSlots(call.getCallClass().getRequiredBandwidth(), bestModulation, link.getSlotSize());
-                            ArrayList<EONSubcarrierSlot> nFreeSlots = link.getFirstNFreeSlots(requiredSlots);
+                    
+                    ArrayList<EONSubcarrierSlot> nFreeSlots = link.getFirstNFreeSlots(requiredSlots);
+
                     if(nFreeSlots.size() > 0){
                         VirtualLink virtualLink = new VirtualLink(link.getSource(), link.getDestination(), nFreeSlots);
                         virtualLinkHashMap.put(virtualLink.getId(), virtualLink);
